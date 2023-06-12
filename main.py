@@ -83,20 +83,25 @@ class StudentLog:
             print("Exited")
             exit()
         # while True:
-        student_model = Student()
+        student_model_objects_list= [Student() for i in range(10)]
         try:
+           
+            for i in range(len(student_model_objects_list)):
+                self.name = input(f"Student Name -- at index {i} : ")
+                student_model_objects_list[i].setname(self.name)
+                self.age  = input(f"Student Age  -- at index {i} :")
+                student_model_objects_list[i].setage(self.age)
             
-            self.name = input("Student Name : ")
-            student_model.setname(self.name)
-            self.age  = input("Age :")
-            student_model.setage(self.age)
-            return student_model ## student object return 
+                # return student_model_objects_list[i] ## student object return 
             
         except ValueError:
             print("name not valid ")
             
         finally:
-            print(f"Name : {student_model.getname}\nAge : {student_model.getage}")
+            
+            for i in range(10):
+                print(f"Name : {student_model_objects_list[i].getname} \nAge : {student_model_objects_list[i].getage}")
+            return student_model_objects_list
         
             
 class GradesAsseser:
@@ -111,7 +116,8 @@ def main():
     log = StudentLog()
     checker = input("do you want to login ( Y / n ) : ")
     if tocheck:= checker == "Y" or checker == 'y':
-        student_list=list(log.Login(tocheck))
+        student_list = log.Login(tocheck)
+        print(student_list)
     else :
         log.Login(tocheck)
         # GA.Login(False)    
