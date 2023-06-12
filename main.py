@@ -1,8 +1,19 @@
-
+from tqdm import tqdm
+from time import sleep
 #TODO  -- create a Student management system with a simple functionality for assigning grades  asses grades to max min and average and view them
 
-class Student:
-    def __init__(self,name,age,roll_no):
+#  *model
+
+class Grades:
+    def __init__(self,Grades=""):
+        self.__Grades =Grades
+    
+    def GiveGrades(self,Grades):
+        self.__Grades = Grades
+
+            
+class Student(Grades):
+    def __init__(self,name="",age="",roll_no=0):
         self.__name = name
         self.__age = age
         self.__roll_no = roll_no
@@ -30,8 +41,73 @@ class Student:
     @property
     def getrollno(self):
         return self.__roll_no
+
+
     
-    
+# *view
+            
 class StudentView:
-    def view():
+    
+    def __init__(self):
         pass
+    
+    def Grades(self):
+       print("the grades") 
+    def Grades_maximum(self):
+        print("maximum grades")
+    def Grades_average(self):
+        print("Average grades")
+        
+# *controller
+class StudentLog:
+    def __init__(self):
+        # self.name 
+        # self.age
+        pass
+   
+        
+    
+    def Login(self,check):
+        if(check is not True):
+            for i in tqdm(range(100),desc="loading",leave=False):
+                sleep(0.0035)
+            print("Exited")
+            exit()
+        # while True:
+        student_model = Student()
+        try:
+            
+            self.name = input("Student Name : ")
+            student_model.setname(self.name)
+            self.age  = input("Age :")
+            student_model.setage(self.age)
+            
+        except ValueError:
+            print("name not valid ")
+        finally:
+            print(f"Name : {student_model.getname}\nAge : {student_model.getage}")
+            
+class GradesAsseser:
+    def __init__(self):
+        pass    
+    def GradesMaximum(self):
+        pass
+        
+        
+        
+def main():
+    log = StudentLog()
+    checker = input("do you want to login ( Y / n ) : ")
+    if tocheck:= checker == "Y" or checker == 'y':
+        log.Login(tocheck)
+    else :
+        log.Login(tocheck)
+        # GA.Login(False)    
+
+main()
+        
+
+        
+        
+
+    
