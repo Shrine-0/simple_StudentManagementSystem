@@ -17,7 +17,9 @@ class Course:
     def __str__ (self):
         return self.__coursename
     
-    # def 
+    @classmethod
+    def total_no(cls):
+        print(f"Total no of courses currently added : {Course.total_course_no}")
     
     @property
     def coursename(self):
@@ -161,7 +163,8 @@ def main():
         print(student_list[1])
     else :
         log.Login(tocheck)
-        # GA.Login(False)    
+        # GA.Login(False) 
+    Course.total_no()
 
 
 if __name__ == "__main__":
