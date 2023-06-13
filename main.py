@@ -2,57 +2,79 @@ from tqdm import tqdm
 from time import sleep
 
 # TODO  -- create a Student management system with a simple functionality for assigning grades  asses grades to max min and average and view them
-# TODO -- Recursively call the student login function to store the student details in the list student list 
-# ! -- student login  recursion required , student logout required a simple break might suffice
+# ! --  add course logic and find the answer for bound object to string 
+# ! -- assign roll no on index numbers 
 
 #  *model
+class Course:
+    
+    def __init__(self,coursename):
+        self.__courseName = coursename
+        
+    def __str__ (self):
+        return self.__courseName
+    
+    @property
+    def coursename(self,coursename):   
+        self.__courseName = coursename
+        
+    @coursename.setter
+    def getcourse(self):
+        return self.__courseName
+
 
 class Grades:
-    def __init__(self,subject,Grades=""):
+    def __init__(self,subject,Grades):
         self.__Grades =Grades
-        self.__subject = subject
     
-    def GiveGrades(self):
-        self.__Grades = Grades
-        
+    def __str__(self):
+        return f"{self.__Grades}"
+    
+    @property
+    def Grades(self):
+        return self.__Grades 
+    
+    @Grades.setter   
     def setGrades(self,grades):
         self.__Grades = grades
 
-            
-class Student(Grades):
-    def __init__(self,name="",age="",roll_no=0):
+class Student(Grades,Course):
+    def __init__(self,name="",age=""):
         self.__name = name
         self.__age = age
-        self.__roll_no = roll_no
+        self.__roll_no = 0
+
+    def __str__(self):
+        return f"{self.__name}({self.__age})--{self.__roll_no}"
         
-    # @name.setter
+    @property
+    def name(self):
+        return self.__name
+    
+    @name.setter
     def setname(self,name):
         if  not isinstance(name,str):
             raise ValueError("Must be a string")
         self.__name = name
-    @property
-    def getname(self):
-        return self.__name
         
-    # @age.setter
+    @property
+    def age(self):
+        return self.__age
+    
+    @age.setter
     def setage(self,age):
         self.__age = age
         
     @property
-    def getage(self):
-        return self.__age
-    
+    def rollno(self):
+        return self.__roll_no
+
+    @rollno.setter
     def setroll_no (self,roll_no):
         self.__roll_no = roll_no
     
-    @property
-    def getrollno(self):
-        return self.__roll_no
 
-
-    
 # *view
-            
 class StudentView:
     
     def __init__(self):
@@ -74,8 +96,6 @@ class StudentLog:
         # self.age
         pass
    
-        
-    
     def Login(self,check):
         if(check is not True):
             for i in tqdm(range(100),desc="loading",leave=False):
@@ -83,27 +103,32 @@ class StudentLog:
             print("Exited")
             exit()
         # while True:
-        student_model_objects_list= [Student() for i in range(10)]
+        student_model_objects_list= [Student() for i in range(2)]
+
         try:
            
             for i in range(len(student_model_objects_list)):
+                
                 self.name = input(f"Student Name -- at index {i} : ")
                 student_model_objects_list[i].setname(self.name)
+                
                 self.age  = input(f"Student Age  -- at index {i} :")
                 student_model_objects_list[i].setage(self.age)
-            
-                # return student_model_objects_list[i] ## student object return 
-            
+                
+                self.grade = input(f"student at index -- {i} grade : ")
+                student_model_objects_list[i].Grades(self.grade)
+                
+            return student_model_objects_list
+
         except ValueError:
             print("name not valid ")
             
         finally:
+            # for i in range(2):
+            #     print(f"Name : {student_model_objects_list[i].getname} \nAge : {student_model_objects_list[i].getage}\nGrades : {student_model_objects_list[i].GiveGrades}")
+            pass
             
-            for i in range(10):
-                print(f"Name : {student_model_objects_list[i].getname} \nAge : {student_model_objects_list[i].getage}")
-            return student_model_objects_list
         
-            
 class GradesAsseser:
     def __init__(self):
         pass    
@@ -111,13 +136,14 @@ class GradesAsseser:
         pass
         
         
-        
 def main():
+    
     log = StudentLog()
     checker = input("do you want to login ( Y / n ) : ")
+    
     if tocheck:= checker == "Y" or checker == 'y':
         student_list = log.Login(tocheck)
-        print(student_list)
+        print(student_list[1])
     else :
         log.Login(tocheck)
         # GA.Login(False)    
