@@ -8,38 +8,51 @@ from time import sleep
 #  *model
 class Course:
     
+    # ! -- class attributes or static variabel declaration and initialization below
+    total_course_no = 0
+    
     def __init__(self,coursename):
-        self.__courseName = coursename
+        self.__coursename = coursename
         
     def __str__ (self):
-        return self.__courseName
+        return self.__coursename
+    
+    # def 
     
     @property
-    def coursename(self,coursename):   
-        self.__courseName = coursename
-        
-    @coursename.setter
-    def getcourse(self):
+    def coursename(self):
         return self.__courseName
-
+    
+    @coursename.setter
+    def coursename(self,coursename):   
+        if not isinstance(coursename,str):
+            raise ValueError("name must be a string")
+        self.__coursename = coursename
+        Course.total_course_no +=1
 
 class Grades:
     def __init__(self,subject,Grades):
-        self.__Grades =Grades
+        self.__grades =Grades
     
     def __str__(self):
         return f"{self.__Grades}"
     
     @property
-    def Grades(self):
+    def grades(self):
         return self.__Grades 
     
-    @Grades.setter   
-    def setGrades(self,grades):
-        self.__Grades = grades
+    @grades.setter   
+    def grades(self,grades):
+        if not isinstance(grades,str):
+           raise ValueError("must be charecter from A to F") 
+        self.__grades = grades
 
 class Student(Grades,Course):
+    
+    number_of_students = 0
+    
     def __init__(self,name="",age=""):
+        
         self.__name = name
         self.__age = age
         self.__roll_no = 0
@@ -52,7 +65,7 @@ class Student(Grades,Course):
         return self.__name
     
     @name.setter
-    def setname(self,name):
+    def name(self,name):
         if  not isinstance(name,str):
             raise ValueError("Must be a string")
         self.__name = name
@@ -62,7 +75,9 @@ class Student(Grades,Course):
         return self.__age
     
     @age.setter
-    def setage(self,age):
+    def age(self,age):
+        if age < 0 :
+            raise ValueError("Age must be appropriate")
         self.__age = age
         
     @property
@@ -70,7 +85,7 @@ class Student(Grades,Course):
         return self.__roll_no
 
     @rollno.setter
-    def setroll_no (self,roll_no):
+    def rollno (self,roll_no):
         self.__roll_no = roll_no
     
 
@@ -110,13 +125,13 @@ class StudentLog:
             for i in range(len(student_model_objects_list)):
                 
                 self.name = input(f"Student Name -- at index {i} : ")
-                student_model_objects_list[i].setname(self.name)
+                student_model_objects_list[i].name = self.name
                 
                 self.age  = input(f"Student Age  -- at index {i} :")
-                student_model_objects_list[i].setage(self.age)
+                student_model_objects_list[i].age = int(self.age)
                 
-                self.grade = input(f"student at index -- {i} grade : ")
-                student_model_objects_list[i].Grades(self.grade)
+                self.grades = input(f"student at index -- {i} grade : ")
+                student_model_objects_list[i].grades = self.grades
                 
             return student_model_objects_list
 
