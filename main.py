@@ -1,5 +1,5 @@
 from tqdm import tqdm
-from time import sleep
+from time import sleep,time
 
 # TODO  -- create a Student management system with a simple functionality for assigning grades  asses grades to max min and average and view them
 # ! --  add course logic and find the answer for bound object to string 
@@ -20,6 +20,11 @@ class Course:
     @classmethod
     def total_no(cls):
         print(f"Total no of courses currently added : {Course.total_course_no}")
+        return Course.total_course_no
+    
+    @classmethod 
+    def increment(cls):
+        Course.total_course_no +=1
     
     @property
     def coursename(self):
@@ -30,18 +35,18 @@ class Course:
         if not isinstance(coursename,str):
             raise ValueError("name must be a string")
         self.__coursename = coursename
-        Course.total_course_no +=1
+        Course.increment()
 
 class Grades:
-    def __init__(self,subject,Grades):
-        self.__grades =Grades
+    def __init__(self,grades):
+        self.__grades =grades
     
     def __str__(self):
-        return f"{self.__Grades}"
+        return f"{self.__grades}"
     
     @property
     def grades(self):
-        return self.__Grades 
+        return self.__grades 
     
     @grades.setter   
     def grades(self,grades):
@@ -54,13 +59,21 @@ class Student(Grades,Course):
     number_of_students = 0
     
     def __init__(self,name="",age=""):
-        
         self.__name = name
         self.__age = age
         self.__roll_no = 0
 
     def __str__(self):
-        return f"{self.__name}({self.__age})--{self.__roll_no}"
+        return f"Name : {self.__name}\nAge : {self.__age}\nroll_no : {self.__roll_no}\nGrades : {self.grades}"
+    
+    @classmethod
+    def total_students(cls):
+        print(f"total no of students : {Student.number_of_students}")
+        return Student.number_of_students
+    
+    @classmethod
+    def increment(cls):
+        Student.number_of_students+=1
         
     @property
     def name(self):
@@ -71,9 +84,10 @@ class Student(Grades,Course):
         if  not isinstance(name,str):
             raise ValueError("Must be a string")
         self.__name = name
+        Student.increment()
         
     @property
-    def age(self):
+    def age(self): 
         return self.__age
     
     @age.setter
@@ -87,8 +101,9 @@ class Student(Grades,Course):
         return self.__roll_no
 
     @rollno.setter
-    def rollno (self,roll_no):
-        self.__roll_no = roll_no
+    def rollno (self):
+        self.__roll_no = Student.number_of_students
+        
     
 
 # *view
@@ -126,13 +141,17 @@ class StudentLog:
            
             for i in range(len(student_model_objects_list)):
                 
-                self.name = input(f"Student Name -- at index {i} : ")
+                # self.name = input(f"Student Name -- at index {i} : ")
+                self.name = input("Student Name : ")
+
                 student_model_objects_list[i].name = self.name
                 
-                self.age  = input(f"Student Age  -- at index {i} :")
+                # self.age  = input(f"Student Age  -- at index {i} :")
+                self.age  = input("Student Age : ")
                 student_model_objects_list[i].age = int(self.age)
                 
-                self.grades = input(f"student at index -- {i} grade : ")
+                # self.grades = input(f"student at index -- {i} grade : ")
+                self.grades = input("students grade in course {course.} : ")
                 student_model_objects_list[i].grades = self.grades
                 
             return student_model_objects_list
@@ -142,7 +161,7 @@ class StudentLog:
             
         finally:
             # for i in range(2):
-            #     print(f"Name : {student_model_objects_list[i].getname} \nAge : {student_model_objects_list[i].getage}\nGrades : {student_model_objects_list[i].GiveGrades}")
+            #     print(f"Name : {student_model_objects_list[i].name} \nAge : {student_model_objects_list[i].age}\nGrades : {student_model_objects_list[i].grades}")
             pass
             
         
@@ -154,17 +173,25 @@ class GradesAsseser:
         
         
 def main():
-    
+    t1 = time()
     log = StudentLog()
     checker = input("do you want to login ( Y / n ) : ")
-    
-    if tocheck:= checker == "Y" or checker == 'y':
-        student_list = log.Login(tocheck)
-        print(student_list[1])
+    if tocheck := checker == "Y" or checker == 'y':
+        student_list=log.Login(tocheck)
     else :
         log.Login(tocheck)
         # GA.Login(False) 
     Course.total_no()
+
+    for i in range(2):
+        print(student_list[i])
+        
+    # print([student_list[i].__str__ for i in range(len(student_list))])
+    
+    t2 = time()
+    print(f"the program took a complete of {t2-t1} secs")
+   
+
 
 
 if __name__ == "__main__":
