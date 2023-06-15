@@ -3,7 +3,6 @@ from time import sleep,time
 
 # TODO  -- create a Student management system with a simple functionality for assigning grades  asses grades to max min and average and view them
 # ! --  add course logic and find the answer for bound object to string 
-# ! -- assign roll no on index numbers 
 
 #  *model
 class Course:
@@ -57,14 +56,10 @@ class Grades:
 class Student(Grades,Course):
     
     number_of_students = 0
-    
-    def __init__(self,name="",age=""):
-        self.__name = name
-        self.__age = age
-        self.__roll_no = 0
-
-    def __str__(self):
-        return f"Name : {self.__name}\nAge : {self.__age}\nroll_no : {self.__roll_no}\nGrades : {self.grades}"
+        
+    @staticmethod
+    def MAX_Students():
+        return Student.number_of_students
     
     @classmethod
     def total_students(cls):
@@ -72,9 +67,26 @@ class Student(Grades,Course):
         return Student.number_of_students
     
     @classmethod
-    def increment(cls):
+    def incrementer(cls):
         Student.number_of_students+=1
+        return Student.number_of_students
+    
+    def __init__(self,name="",age=""):
+        self.__name = name
+        self.__age = age
+        self.__roll_no = 0
+
+    def __str__(self):
+        return f"\nName : {self.__name}\nAge : {self.__age}\nroll_no : {self.rollno}\nGrades : {self.grades}"
         
+    @property
+    def rollno(self):
+        return self.__roll_no
+
+    @rollno.setter
+    def rollno (self,n):
+        self.__roll_no = n
+    
     @property
     def name(self):
         return self.__name
@@ -84,7 +96,8 @@ class Student(Grades,Course):
         if  not isinstance(name,str):
             raise ValueError("Must be a string")
         self.__name = name
-        Student.increment()
+        add = Student.incrementer()
+        self.rollno = add
         
     @property
     def age(self): 
@@ -96,15 +109,6 @@ class Student(Grades,Course):
             raise ValueError("Age must be appropriate")
         self.__age = age
         
-    @property
-    def rollno(self):
-        return self.__roll_no
-
-    @rollno.setter
-    def rollno (self):
-        self.__roll_no = Student.number_of_students
-        
-    
 
 # *view
 class StudentView:
@@ -122,6 +126,30 @@ class StudentView:
         print("Average grades")
         
 # *controller
+def log_Logic():
+    t1 = time()
+    log = StudentLog()
+    checker = input("do you want to login ( Y / n ) : ")
+    if tocheck := checker == "Y" or checker == 'y':
+        student_list=log.Login(tocheck)
+    else :
+        log.Login(tocheck)
+        # GA.Login(False) 
+    
+
+    for i in range(2):
+        print(student_list[i])
+    print(f"\nTotal no of students : {Student.number_of_students}")
+        
+    # print([student_list[i].__str__ for i in range(len(student_list))])
+    
+    t2 = time()
+    print(f"the program took a complete of {t2-t1} secs")
+   
+
+
+
+
 class StudentLog:
     def __init__(self):
         # self.name 
@@ -164,33 +192,17 @@ class StudentLog:
             #     print(f"Name : {student_model_objects_list[i].name} \nAge : {student_model_objects_list[i].age}\nGrades : {student_model_objects_list[i].grades}")
             pass
             
-        
+
 class GradesAsseser:
     def __init__(self):
-        pass    
+        pass
+            
     def GradesMaximum(self):
         pass
         
         
 def main():
-    t1 = time()
-    log = StudentLog()
-    checker = input("do you want to login ( Y / n ) : ")
-    if tocheck := checker == "Y" or checker == 'y':
-        student_list=log.Login(tocheck)
-    else :
-        log.Login(tocheck)
-        # GA.Login(False) 
-    Course.total_no()
-
-    for i in range(2):
-        print(student_list[i])
-        
-    # print([student_list[i].__str__ for i in range(len(student_list))])
-    
-    t2 = time()
-    print(f"the program took a complete of {t2-t1} secs")
-   
+    log_Logic()
 
 
 
