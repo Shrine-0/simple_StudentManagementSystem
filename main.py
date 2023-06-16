@@ -133,13 +133,13 @@ def log_Logic():
     log = StudentLog()
     checker = input("do you want to login ( Y / n ) : ")
     if tocheck := checker == "Y" or checker == 'y':
-        student_list=log.Login(tocheck)
+        student_list,num=log.Login(tocheck)
     else :
         log.Login(tocheck)
         # GA.Login(False) 
     
 
-    for i in range(2):
+    for i in range(num):
         print(student_list[i])
     print(f"\nTotal no of students : {Student.number_of_students}")
         
@@ -155,6 +155,7 @@ class StudentLog:
     def __init__(self):
         # self.name 
         # self.age
+        self.__num=0
         pass
    
     def Login(self,check):
@@ -164,7 +165,8 @@ class StudentLog:
             print("Exited")
             exit()
         # while True:
-        student_model_objects_list= [Student() for i in range(2)]
+        self.__num = input("no of students you want to record data of : ")
+        student_model_objects_list= [Student() for i in range(int(self.__num))]
 
         try:
            
@@ -183,7 +185,7 @@ class StudentLog:
                 self.grades = input("students grade in course {course.} : ")
                 student_model_objects_list[i].grades = self.grades
                 
-            return student_model_objects_list
+            return student_model_objects_list,int(self.__num)
 
         except ValueError:
             print("name not valid ")
@@ -208,8 +210,18 @@ class GradesAsseser:
                     temp = self.gradesobj[i]
                     self.gradesobj[i] = self.gradesobj[j]
                     self.gradesobj[j] = temp   
-        print(f"\nname : {self.gradesobj[0].name}\nAge : {self.gradesobj[0].age}\nroll no : {self.gradesobj[0].rollno}\nGrade : {self.gradesobj[0].grades}")
-        return self.gradesobj[0]
+        print(f"\n\tMAX-GRADES\nname : {self.gradesobj[0].name}\nAge : {self.gradesobj[0].age}\nroll no : {self.gradesobj[0].rollno}\nGrade : {self.gradesobj[0].grades}")
+        
+    def lowest_grades_student(self):
+        for i in range(Student.number_of_students):
+            for j in range(Student.number_of_students):
+                if self.gradesobj[i].grades > self.gradesobj[j].grades:
+                    # print("YES")
+                    temp = self.gradesobj[i]
+                    self.gradesobj[i] = self.gradesobj[j]
+                    self.gradesobj[j] = temp   
+        print(f"\n\tMIN-GRADES\nname : {self.gradesobj[0].name}\nAge : {self.gradesobj[0].age}\nroll no : {self.gradesobj[0].rollno}\nGrade : {self.gradesobj[0].grades}")
+        
         
             
             
@@ -218,6 +230,7 @@ def main():
     t1 = time()
     Grades_Maximum=GradesAsseser(Student_object:=log_Logic())
     Grades_Maximum.highest_grades_student()
+    Grades_Maximum.lowest_grades_student()
     t2 = time()
     print(f"the program  took a complete of {t2-t1} secs")
     # Grades_Maximum.GradesMaximum()
