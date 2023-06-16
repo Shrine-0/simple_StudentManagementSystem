@@ -125,9 +125,11 @@ class StudentView:
     def Grades_average(self):
         print("Average grades")
         
+        
 # *controller
+
 def log_Logic():
-    t1 = time()
+    
     log = StudentLog()
     checker = input("do you want to login ( Y / n ) : ")
     if tocheck := checker == "Y" or checker == 'y':
@@ -143,8 +145,7 @@ def log_Logic():
         
     # print([student_list[i].__str__ for i in range(len(student_list))])
     
-    t2 = time()
-    print(f"the program took a complete of {t2-t1} secs")
+    return student_list
    
 
 
@@ -158,7 +159,7 @@ class StudentLog:
    
     def Login(self,check):
         if(check is not True):
-            for i in tqdm(range(100),desc="loading",leave=False):
+            for i in tqdm(range(100),desc="Exiting..",leave=False):
                 sleep(0.0035)
             print("Exited")
             exit()
@@ -194,15 +195,34 @@ class StudentLog:
             
 
 class GradesAsseser:
-    def __init__(self):
-        pass
+    def __init__(self,grades):
+        self.gradesobj = grades
+        # print(f"grades : {self.gradesobj[0].grades}")
+        # print(self.gradesobj)
+        
+    def highest_grades_student(self):
+        for i in range(Student.number_of_students):
+            for j in range(Student.number_of_students):
+                if self.gradesobj[i].grades < self.gradesobj[j].grades:
+                    # print("YES")
+                    temp = self.gradesobj[i]
+                    self.gradesobj[i] = self.gradesobj[j]
+                    self.gradesobj[j] = temp   
+        print(f"\nname : {self.gradesobj[0].name}\nAge : {self.gradesobj[0].age}\nroll no : {self.gradesobj[0].rollno}\nGrade : {self.gradesobj[0].grades}")
+        return self.gradesobj[0]
+        
             
-    def GradesMaximum(self):
-        pass
-        
-        
+            
+            
 def main():
-    log_Logic()
+    t1 = time()
+    Grades_Maximum=GradesAsseser(Student_object:=log_Logic())
+    Grades_Maximum.highest_grades_student()
+    t2 = time()
+    print(f"the program  took a complete of {t2-t1} secs")
+    # Grades_Maximum.GradesMaximum()
+    # print(f"Maximum grades of a student : {Grades_Maximum.GradesMaximum()}")
+    
 
 
 
