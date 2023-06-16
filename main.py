@@ -228,6 +228,16 @@ class GradesAsseser:
             
 def main():
     t1 = time()
+    non_ascii = '''
+    ███████╗███████╗████████╗██╗   ██╗██████╗ 
+    ██╔════╝██╔════╝╚══██╔══╝██║   ██║██╔══██╗
+    ███████╗█████╗     ██║   ██║   ██║██████╔╝
+    ╚════██║██╔══╝     ██║   ██║   ██║██╔═══╝  
+    ███████║███████╗   ██║   ╚██████╔╝██║     
+    ╚══════╝╚══════╝   ╚═╝    ╚═════╝ ╚═╝     
+    '''
+
+    print(non_ascii)
     Grades_Maximum=GradesAsseser(Student_object:=log_Logic())
     Grades_Maximum.highest_grades_student()
     Grades_Maximum.lowest_grades_student()
